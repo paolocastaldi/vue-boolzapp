@@ -103,7 +103,7 @@ const contacts = [
 	},
 	{
 		name: 'Claudia',
-		avatar: './img/avatar_5.jpg',
+		avatar: './img/avatar_6.jpg',
 		visible: true,
 		messages: [
 			{
@@ -164,10 +164,98 @@ const contacts = [
 	},
 ]
 
+const { DateTime } = luxon
+
 createApp({
 	data() {
 		return {
 			contacts: contacts,
+			activeContactIndex: 3,
+			message: '',
+			search: '',
 		}
+	},
+	watch: {
+		activeContactIndex(newIndex, oldIndex) {
+			console.log('newIndex:', newIndex)
+			console.log('oldIndex:', oldIndex)
+		},
+	},
+	computed: {
+		activeContact() {
+			return this.contacts[this.activeContactIndex]
+		},
+		activeChat() {
+			return this.activeContact.messages
+		},
+	},
+	watch: {
+		activeContactIndex() {
+			this.resetMessage()
+		},
+	},
+	methods: {
+		setActiveContactIndex(index) {
+			this.activeContactIndex = index
+		},
+		getContactsLength() {
+			return this.numberOfContacts
+		},
+		getActiveContact() {
+			return this.contacts[this.activeContactIndex]
+		},
+		resetMessage() {
+			this.message = ''
+		},
+		getDateAsString(format = 'dd/LL/yyyy') {
+			const now = DateTime.now()
+			return now.toFormat(format)
+		},
+		isHidden(contact) {
+			const name = contact.name.toLowerCase()
+			const search = this.search.trim().toLowerCase()
+
+			const result = !name.includes(search)
+
+
+			return result
+
+		},
+		sendMessage() {
+			const text = this.message.trim()
+			console.log(text)
+
+			if (text === '') return
+
+			const date = this.getDateAsString('dd/LL/yyyy HH:mm:ss')
+
+
+			const messageObj = {
+				date: date,
+				message: text,
+				status: 'sent',
+			}
+
+			console.log(messageObj)
+
+			this.activeContact.messages.push(messageObj)
+			this.resetMessage()
+
+			const self = this
+			const activeContact = this.contacts[this.activeContactIndex]
+
+			setTimeout(() => {
+
+				console.log(this, self)
+				const risposta = {
+					date: self.getDateAsString('dd/LL/yyyy HH:mm:ss'),
+					message: 'ok',
+					status: 'received',
+				}
+				console.log('risposta automatica', risposta)
+
+				activeContact.messages.push(risposta)
+			}, 2000)
+		},
 	},
 }).mount('#app')

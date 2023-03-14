@@ -28,15 +28,17 @@ html {
 	font-family: 'Poppins', sans-serif;
 }
 
+.hidden {
+	display: none;
+}
+
 #app {
 	height: 100vh;
-	background-image: linear-gradient(
-		to bottom,
-		#009688 0px,
-		#009688 15vh,
-		#dddbd1 15vh,
-		#d2dbdc 100%
-	);
+	background-image: linear-gradient(to bottom,
+			#009688 0px,
+			#009688 15vh,
+			#dddbd1 15vh,
+			#d2dbdc 100%);
 	padding: 40px;
 	display: flex;
 }
@@ -53,12 +55,12 @@ html {
 	width: 350px;
 	flex-shrink: 0;
 	border-right: 1px solid rgba(0, 0, 0, 0.2);
-	/* background-color: red; */
+
 }
 
 .main {
 	flex-grow: 1;
-	/* background-color: greenyellow; */
+
 }
 
 .main,
@@ -173,14 +175,13 @@ html {
 }
 
 .message .time {
-	/* font-size: 10px; */
 	position: absolute;
 	bottom: 4px;
 	right: 4px;
 	color: #979797;
 }
 
-/* user input */
+
 
 .toolbar .user-input {
 	line-height: 52px;
@@ -196,7 +197,7 @@ html {
 	font-size: 24px;
 }
 
-/* alert notifiche */
+
 .card.alert {
 	font-size: 14px;
 }
